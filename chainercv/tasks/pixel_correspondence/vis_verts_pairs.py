@@ -1,4 +1,5 @@
 import numpy as np
+import six
 
 
 def vis_verts_pairs(src_img, dst_img, verts, axes=None):
@@ -22,11 +23,11 @@ def vis_verts_pairs(src_img, dst_img, verts, axes=None):
     n_colors = 15
     cm = plot.get_cmap('gist_rainbow')
 
-    colors = [cm(1. * i / n_colors) for i in range(n_colors)]
+    colors = [cm(1. * i / n_colors) for i in six.moves.range(n_colors)]
     if verts.shape[2] == 3:
         valid_indices = np.where(np.all(verts[:, :, 2] > 0, axis=1))[0]
     elif verts.shape[2] == 2:
-        valid_indices = range(verts.shape[1])
+        valid_indices = list(six.moves.range(verts.shape[1]))
     else:
         raise ValueError('invalid vertex shape')
     select_idxs = np.random.choice(
